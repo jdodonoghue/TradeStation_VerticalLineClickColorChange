@@ -1,0 +1,106 @@
+using elsystem;
+using elsystem.windows.forms;
+using elsystem.drawing; 
+using elsystem.drawingobjects;
+using charting;
+using elsystem.collections;
+
+vars: elsystem.windows.forms.Form mainForm(Null);
+vars: elsystem.drawingobjects.VerticalLine myVLine(null);
+vars: charting.DrawingObjectVisualElement myDrawingObject(null);
+var: Vector myVectorObj(null);
+var: int objectCount(0);
+vars: int MyObjects(null);
+
+method void AnalysisTechnique_Initialized( elsystem.Object sender, elsystem.InitializedEventArgs args ) 
+begin
+	Cleardebug();
+end;
+
+method void ChartingHost1_ChartElementClick( elsystem.Object sender, charting.ChartElementClickEventArgs args ) 
+begin
+	//print("ChartingHost1_ChartElementClick");
+	SetupDrawingObjects(); 
+	
+end;
+
+method void SetupDrawingObjects()
+variables: int MyObjects, VerticalLine myVLine, int counter;
+  
+begin
+  	
+     MyObjects = ObjectCategory.VerticalLineCreatedByDrawingObject;
+     
+     objectCount = DrawingObjects.Items[MyObjects].Count;
+     
+     for counter = 0 to objectCount - 1
+     begin
+          myVLine = DrawingObjects.Items[MyObjects][Counter] astype VerticalLine ;
+          myVLine.Click += myVLine_OnClick;
+          //myVLine.Moved += myVLine_OnMoved;
+          //myVLine.Moving +=	myVLine_OnMoving;
+          
+     end; 
+    
+end;      
+
+method void myVLine_OnClick( elsystem.object sender, elsystem.DrawingObjects.DrawingObjectEventArgs args )
+Var: VerticalLine myVLine1;
+Begin
+	
+  	//print("myVLine_OnClick"); 
+  	myVLine1 = sender astype VerticalLine;
+  	if myVLine1.Color = elsystem.drawing.Color.Green Then
+  	Begin
+  		myVLine1.Color = elsystem.drawing.Color.Red;
+  		return;
+  	end;
+  	if myVLine1.Color = elsystem.drawing.Color.Red Then
+  	Begin
+  		myVLine1.Color = elsystem.drawing.Color.White;
+  		return;
+  	end;
+  	myVLine1.Color = elsystem.drawing.Color.Green;
+  	
+end;
+
+{
+method void myVLine_OnMoved( elsystem.object sender, elsystem.DrawingObjects.DrawingObjectMovedEventArgs args )
+Var: VerticalLine myVLine1;
+Begin
+	print("myVLine_OnMoved");
+End;
+
+method void myVLine_OnMoving( elsystem.object sender, elsystem.DrawingObjects.DrawingObjectMovedEventArgs args )
+Var: VerticalLine myVLine1;
+Begin
+	print("myVLine_OnMoving");
+End;
+}
+
+
+
+method void DeleteAllVL()
+var: elsystem.DrawingObjects.DrawObjects drawobjects;
+Begin 
+	 //drawobjects
+     //MyObjects = ObjectCategory.VerticalLineCreatedByDrawingObject;
+     
+     //objectCount = DrawingObjects.Items[MyObjects].Count;
+     
+     //for counter = 0 to objectCount - 1
+     //begin
+     //     myVLine = DrawingObjects.Items[MyObjects][Counter] astype VerticalLine ;
+          //myVLine          
+     //end; 
+
+
+end;
+
+{
+method void ChartingHost1_OnKeyDown( elsystem.Object sender, elsystem.HostKeyEventArgs args ) 
+begin
+	print("ChartingHost1_OnKeyDown"); 
+end;
+}
+
